@@ -62,11 +62,12 @@ class IOWebSocketChannel extends StreamChannelMixin
     Iterable<String>? protocols,
     Map<String, dynamic>? headers,
     Duration? pingInterval,
+    HttpClient? client
   }) {
     late IOWebSocketChannel channel;
     final sinkCompleter = WebSocketSinkCompleter();
     final stream = StreamCompleter.fromFuture(
-      WebSocket.connect(url.toString(), headers: headers, protocols: protocols)
+      WebSocket.connect(url.toString(), headers: headers, protocols: protocols, customClient: client)
           .then((webSocket) {
         webSocket.pingInterval = pingInterval;
         channel._webSocket = webSocket;
